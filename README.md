@@ -23,7 +23,7 @@ Build dedicated server:
 ./waf install
 ```
 
-On the `modname` you should place folder name of the mod. Mods are listed in this folder [https://github.com/AruMoon/source-engine-dedicated/tree/master/game/server](folder)
+On the `modname` you should place folder name of the mod. Mods are listed in this folder https://github.com/AruMoon/source-engine-dedicated/tree/master/game/server
 
 Prefix paramter should point to the root folder of the game. `/home/user/Half-Life 2` for example
 
