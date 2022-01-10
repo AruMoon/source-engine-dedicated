@@ -70,12 +70,12 @@ CFLAGS = {
 	'release': {
 		'msvc':    ['/O2'],
 		'owcc':    ['-O3', '-foptimize-sibling-calls', '-fomit-leaf-frame-pointer', '-fomit-frame-pointer', '-fschedule-insns', '-funsafe-math-optimizations', '-funroll-loops', '-frerun-optimizer', '-finline-functions', '-finline-limit=512', '-fguess-branch-probability', '-fno-strict-aliasing', '-floop-optimize'],
-		'default': ['-O3']
+		'default': ['-O1']
 	},
 	'debug': {
 		'msvc':    ['/Od'],
 		'owcc':    ['-O0', '-fno-omit-frame-pointer', '-funwind-tables', '-fno-omit-leaf-frame-pointer'],
-		'default': ['-O0']
+		'default': ['-O1']
 	},
 	'sanitize': {
 		'msvc':    ['/Od', '/RTC1'],
