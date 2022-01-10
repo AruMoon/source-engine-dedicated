@@ -1,5 +1,5 @@
 # What's this?
-This repository is a nillerusr's Source Engine `dedicated` branch published to let users build and run dedicated servers ot play on PC
+This repository is a nillerusr's Source Engine `dedicated` branch published to let users build and run dedicated servers or play on PC
 
 # How to Build?
 Clone repo and change directory:
