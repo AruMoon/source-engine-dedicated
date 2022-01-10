@@ -1,0 +1,6 @@
+[submodule "ivp"]
+	path = ivp
+	url = https://github.com/nillerusr/source-physics
+[submodule "thirdparty"]
+	path = thirdparty
+	url = https://github.com/nillerusr/source-thirdparty
