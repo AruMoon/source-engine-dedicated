@@ -27,7 +27,7 @@ On the `modname` you should place folder name of the mod. Mods are listed in thi
 
 Prefix paramter should point to the root folder of the game. `/home/user/Half-Life 2` for example
 
-Before executing install, delete all files in `bin` and `modname/bin` folders
+Before executing install, delete all files in `bin` and `modname/bin` folders in game folder
 
 
 ### On Windows/MacOS:
