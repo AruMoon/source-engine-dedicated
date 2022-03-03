@@ -292,6 +292,18 @@ public:
 		MenuItem *item = new CGameMenuItem(this, itemName);
 		item->AddActionSignalTarget(target);
 		item->SetCommand(command);
+		item->SetProportional(true);
+		item->SetText(itemText);
+		item->SetUserData(userData);
+		return BaseClass::AddMenuItem(item);
+	}
+
+	virtual int AddMenuItem(const char *itemName, wchar_t *itemText, const char *command, Panel *target, KeyValues *userData = NULL)
+	{
+		MenuItem *item = new CGameMenuItem(this, itemName);
+		item->AddActionSignalTarget(target);
+		item->SetCommand(command);
+		item->SetProportional(true);
 		item->SetText(itemText);
 		item->SetUserData(userData);
 		return BaseClass::AddMenuItem(item);
@@ -586,6 +598,9 @@ public:
 					KeyValues *kv1 = menuItem1->GetUserData();
 					KeyValues *kv2 = menuItem2->GetUserData();
 
+					if( !kv1 || !kv2 )
+						continue;
+
 					if ( kv1->GetInt("InGameOrder") > kv2->GetInt("InGameOrder") )
 						MoveMenuItem( iID2, iID1 );
 				}
@@ -657,7 +672,7 @@ bool g_bIsCreatingNewGameMenuForPreFetching = false;
 // Purpose: Constructor
 //-----------------------------------------------------------------------------
 CBasePanel::CBasePanel() : Panel(NULL, "BaseGameUIPanel")
-{	
+{
 	g_pBasePanel = this;
 	m_bLevelLoading = false;
 	m_eBackgroundState = BACKGROUND_INITIAL;
@@ -863,6 +878,7 @@ CBasePanel::~CBasePanel()
 static const char *g_rgValidCommands[] =
 {
 	"OpenGameMenu",
+	"OpenConsole",
 	"OpenPlayerListDialog",
 	"OpenNewGameDialog",
 	"OpenLoadGameDialog",
@@ -1477,6 +1493,13 @@ CGameMenu *CBasePanel::RecursiveLoadGameMenu(KeyValues *datafile)
 {
 	CGameMenu *menu = new CGameMenu(this, datafile->GetName());
 
+	wchar_t *pString = g_pVGuiLocalize->Find( "#GameUI_Console" );
+
+	if( pString )
+		menu->AddMenuItem("Console", V_wcsupr(pString), "OpenConsole", this);
+	else
+		menu->AddMenuItem("Console", "CONSOLE", "OpenConsole", this);
+
 	// loop through all the data adding items to the menu
 	for (KeyValues *dat = datafile->GetFirstSubKey(); dat != NULL; dat = dat->GetNextKey())
 	{
@@ -1899,6 +1922,10 @@ void CBasePanel::RunMenuCommand(const char *command)
 	{
 		OnOpenNewGameDialog();
 	}
+	else if ( !Q_stricmp( command, "OpenConsole" ) )
+	{
+		GameConsole().Activate();
+	}
 	else if ( !Q_stricmp( command, "OpenLoadGameDialog" ) )
 	{
 		if ( !GameUI().IsConsoleUI() )
@@ -1983,12 +2010,14 @@ void CBasePanel::RunMenuCommand(const char *command)
 	{
 		if ( IsPC() )
 		{
+#ifndef NO_STEAM
 			if ( !steamapicontext->SteamUser() || !steamapicontext->SteamUser()->BLoggedOn() )
 			{
-				vgui::MessageBox *pMessageBox = new vgui::MessageBox("#GameUI_Achievements_SteamRequired_Title", "#GameUI_Achievements_SteamRequired_Message");
+				vgui::MessageBox *pMessageBox = new vgui::MessageBox("#GameUI_Achievements_SteamRequired_Title", "#GameUI_Achievements_SteamRequired_Message", this);
 				pMessageBox->DoModal();
 				return;
 			}
+#endif
 			OnOpenAchievementsDialog();
 		}
 		else

@@ -569,15 +569,15 @@ bool CBaseClientState::PrepareSteamConnectResponse( uint64 unGSSteamID, bool bGS
 	{
 		return true;
 	}
-/*
-#if !defined( NO_STEAM ) && !defined( SWDS  ) 
+
+#if 0 //!defined( NO_STEAM ) && !defined( SWDS  ) 
 	if ( !Steam3Client().SteamUser() )
 	{
 		COM_ExplainDisconnection( true, "#GameUI_ServerRequireSteam" );
 		Disconnect( "#GameUI_ServerRequireSteam", true );
 		return false;
 	}
-#endif*/
+#endif
 
 	netadr_t checkAdr = adr;
 	if ( adr.GetType() == NA_LOOPBACK || adr.IsLocalhost() )
@@ -585,21 +585,19 @@ bool CBaseClientState::PrepareSteamConnectResponse( uint64 unGSSteamID, bool bGS
 		checkAdr.SetIP( net_local_adr.GetIPHostByteOrder() );
 	}
 
-#ifndef SWDS
+#if 0 // #ifndef SWDS
 	// now append the steam3 cookie
 	char steam3Cookie[ STEAM_KEYSIZE ];
 	uint32 steam3CookieLen = 0;
 
 	Steam3Client().GetAuthSessionTicket( steam3Cookie, sizeof(steam3Cookie), &steam3CookieLen, checkAdr.GetIPHostByteOrder(), checkAdr.GetPort(), unGSSteamID, bGSSecure );
 
-/*
 	if ( steam3CookieLen == 0 )
 	{
 		COM_ExplainDisconnection( true, "#GameUI_ServerRequireSteam" );
 		Disconnect( "#GameUI_ServerRequireSteam", true );
 		return false;
 	}
-*/
 
 	msg.WriteShort( steam3CookieLen );
 	if ( steam3CookieLen > 0 )
@@ -938,7 +936,7 @@ bool CBaseClientState::ProcessConnectionlessPacket( netpacket_t *packet )
 								int authprotocol = msg.ReadLong();
 								uint64 unGSSteamID = 0;
 								bool bGSSecure = false;
-/*
+#if 0
 								if ( authprotocol == PROTOCOL_STEAM )
 								{
 									if ( msg.ReadShort() != 0 )
@@ -965,7 +963,8 @@ bool CBaseClientState::ProcessConnectionlessPacket( netpacket_t *packet )
 										Disconnect( "#GameUI_ServerInsecure", true );
 										return false;
 									}
-								}*/
+								}
+#endif
 								SendConnectPacket( challenge, authprotocol, unGSSteamID, bGSSecure );
 							}
 							break;

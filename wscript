@@ -38,6 +38,7 @@ projects={
 		'dmxloader',
 		'engine',
 		'engine/voice_codecs/minimp3',
+		'engine/voice_codecs/opus',
 		'filesystem',
 		'game/client',
 		'game/server',
@@ -65,7 +66,6 @@ projects={
 		'tier1',
 		'tier2',
 		'tier3',
-		'togl',
 		'vgui2/matsys_controls',
 		'vgui2/src',
 		'vgui2/vgui_controls',
@@ -136,6 +136,8 @@ def get_taskgen_count(self):
 
 def define_platform(conf):
 	conf.env.DEDICATED = conf.options.DEDICATED
+	conf.env.TOGLES = conf.options.TOGLES
+	conf.env.GL = conf.options.GL
 
 	if conf.options.DEDICATED:
 		conf.options.SDL = False
@@ -148,6 +150,10 @@ def define_platform(conf):
 			'GL_GLEXT_PROTOTYPES',
 			'BINK_VIDEO'
 		])
+
+	if conf.options.TOGLES:
+		conf.env.append_unique('DEFINES', ['TOGLES'])
+
 
 	if conf.options.SDL:
 		conf.define('USE_SDL', 1)
@@ -205,6 +211,9 @@ def options(opt):
 	grp.add_option('--use-ccache', action = 'store_true', dest = 'CCACHE', default = False,
 		help = 'build using ccache [default: %default]')
 
+	grp.add_option('--togles', action = 'store_true', dest = 'TOGLES', default = False,
+		help = 'build engine with ToGLES [default: %default]')
+
 	opt.load('compiler_optimizations subproject')
 
 #	opt.add_subproject(projects['game'])
@@ -228,6 +237,12 @@ def configure(conf):
 
 	define_platform(conf)
 
+	if conf.env.TOGLES:
+		projects['game'] += ['togles']
+	elif conf.env.GL:
+		projects['game'] += ['togl']
+
+
 	if conf.env.DEST_OS in ['win32', 'linux', 'darwin'] and conf.env.DEST_CPU == 'x86_64':
 		conf.env.BIT32_MANDATORY = not conf.options.ALLOW64
 		if conf.env.BIT32_MANDATORY:
@@ -238,6 +253,7 @@ def configure(conf):
 	conf.load('force_32bit')
 
 	compiler_optional_flags = [
+		'-pipe',
 		'-Wall',
 		'-fdiagnostics-color=always',
 		'-Wcast-align',
@@ -254,7 +270,7 @@ def configure(conf):
 
 	cflags, linkflags = conf.get_optimization_flags()
 
-	flags = ['-fPIC']
+	flags = ['-fPIC'] #, '-fsanitize=undefined']
 
 	if conf.env.DEST_OS == 'android':
 		flags += [
@@ -264,15 +280,14 @@ def configure(conf):
 			'-I'+os.path.abspath('.')+'/thirdparty/openal-soft/include/',
 			'-I'+os.path.abspath('.')+'/thirdparty/fontconfig',
 			'-I'+os.path.abspath('.')+'/thirdparty/freetype/include',
-			'-llog'
+			'-llog',
+			'-lz'
 		]
 
 	if conf.env.DEST_CPU == 'arm':
-		flags += ['-fsigned-char', '-mfpu=neon']
+		flags += ['-fsigned-char']
 
-		if conf.env.DEST_OS == 'android':
-			flags += ['-mcpu=cortex-a15', '-mtune=cortex-a15']
-		else:
+		if conf.env.DEST_OS != 'android':
 			flags += ['-march=native', '-mtune=native']
 	else:
 		flags += ['-march=native','-mtune=native','-mfpmath=sse', '-msse', '-msse2']
@@ -326,6 +341,8 @@ def configure(conf):
 			conf.check_cfg(package='libpng', uselib_store='PNG', args=['--cflags', '--libs'])
 			conf.check_cfg(package='libcurl', uselib_store='CURL', args=['--cflags', '--libs'])
 		conf.check_cfg(package='zlib', uselib_store='ZLIB', args=['--cflags', '--libs'])
+		conf.check_cfg(package='opus', uselib_store='OPUS', args=['--cflags', '--libs'])
+#		conf.check_cfg(package='speex', uselib_store='SPEEX', args=['--cflags', '--libs'])
 	else:
 		conf.check(lib='SDL2', uselib_store='SDL2')
 		conf.check(lib='freetype2', uselib_store='FT2')
@@ -338,6 +355,8 @@ def configure(conf):
 		conf.check(lib='ssl', uselib_store='SSL')
 		conf.check(lib='expat', uselib_store='EXPAT')
 		conf.check(lib='android_support', uselib_store='ANDROID_SUPPORT')
+		conf.check(lib='opus', uselib_store='OPUS')
+#		conf.check(lib='speex', uselib_store='SPEEX')
 
 	if conf.env.DEST_OS != 'win32':
 		conf.check_cc(lib='dl', mandatory=False)
@@ -395,4 +414,9 @@ def build(bld):
 	if bld.env.DEDICATED:
 		bld.add_subproject(projects['dedicated'])
 	else:
+		if bld.env.TOGLES:
+			projects['game'] += ['togles']
+		elif bld.env.GL:
+			projects['game'] += ['togl']
+
 		bld.add_subproject(projects['game'])
