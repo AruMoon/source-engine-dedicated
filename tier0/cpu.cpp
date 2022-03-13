@@ -451,7 +451,8 @@ static int64 CalculateClockSpeed()
 	int64 freq =(int64)CalculateCPUFreq();
 	if ( freq == 0 ) // couldn't calculate clock speed
 	{
-		Error( "Unable to determine CPU Frequency\n" );
+		//Error( "Unable to determine CPU Frequency\n" );
+		freq = 2000000000;
 	}
 	return freq;
 #endif
