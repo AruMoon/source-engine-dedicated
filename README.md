@@ -4,7 +4,7 @@ This repository is a nillerusr's Source Engine `dedicated` branch published to l
 # How to Build?
 Clone repo and change directory:
 ```
-git clone https://github.com/AruMoon/source-engine-dedicated.git --recursive --depth 1
+git clone https://github.com/AruMoon/source-engine-dedicated.git --recursive
 cd source-engine-dedicated
 ```
 ## On Linux:
