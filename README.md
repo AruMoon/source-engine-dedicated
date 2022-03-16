@@ -10,7 +10,7 @@ cd source-engine-dedicated
 ## On Linux:
 
 Install dependencies:
-fontconfig, freetype2, OpenAL, SDL2, libbz2, libcurl, libjpeg, libpng, zlib, libedit
+zlib, libedit
 
 You also need 32 bit versions of these libraries
 
