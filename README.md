@@ -18,7 +18,7 @@ On Debian/Ubuntu:
 ```
 sudo dpkg --add-architecture i386
 sudo apt update
-sudo apt install libedit-dev:i386 # Example for installing one of the lib
+sudo apt install libedit-dev:i386 zlib1g-dev:i386 libedit-dev zlib1g-dev
 ```
 
 ### Supported servers for master branch
