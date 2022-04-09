@@ -1,3 +1,5 @@
+[![pipeline status](https://gitlab.com/AruMoon/source-engine-dedicated/badges/ssdk-2013/pipeline.svg)](https://gitlab.com/AruMoon/source-engine-dedicated/-/jobs)
+
 # What's this?
 This repository is a nillerusr's Source Engine `dedicated` branch published to let users build and run dedicated servers
 
