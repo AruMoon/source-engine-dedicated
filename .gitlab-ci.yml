@@ -16,9 +16,9 @@ linux_cstrike_dedicated_x86:
   script:
   - mkdir -p $CI_PROJECT_DIR/out
   - ./waf configure -T release -d --prefix=./out --build-game=cstrike
-  - ./waf install -j$(nproc --all)
+  - ./waf install -j$(nproc --all) 2>/dev/null
   - ./waf configure -T debug -d --prefix=./out --build-game=cstrike
-  - ./waf install -j$(nproc --all) --target=vphysics
+  - ./waf install -j$(nproc --all) --target=vphysics 2>/dev/null
   artifacts:
     paths:
     - $CI_PROJECT_DIR/out
