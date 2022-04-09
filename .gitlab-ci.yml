@@ -1,0 +1,23 @@
+image: ubuntu:xenial
+
+stages:
+  - linux_cstrike_dedicated_x86
+
+variables:
+  GIT_SUBMODULE_STRATEGY: recursive
+
+linux_cstrike_dedicated_x86:
+  stage: linux_cstrike_dedicated_x86
+  before_script:
+  - dpkg --add-architecture i386
+  - apt update
+  - apt install -y git curl wget ca-certificates libedit-dev libedit-dev:i386 zlib1g-dev zlib1g-dev:i386 python gcc gcc-multilib g++ g++-multilib pkg-config libopus-dev libopus-dev:i386
+  script:
+  - mkdir -p $CI_PROJECT_DIR/out
+  - ./waf configure -T release -d --prefix=./out --build-game=cstrike
+  - ./waf install -j2
+  - ./waf configure -T debug -d --prefix=./out --build-game=cstrike
+  - ./waf install -j2 --target=vphysics
+  artifacts:
+    paths:
+    - $CI_PROJECT_DIR/out
