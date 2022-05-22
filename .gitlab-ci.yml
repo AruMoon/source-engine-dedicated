@@ -1,8 +1,10 @@
 image: ubuntu:xenial
 
-stages:
-  - linux_cstrike_dedicated_x86
-  - linux_hl2mp_dedicated_x86
+stage-flow:
+  build:
+    stages:
+    - linux_cstrike_dedicated_x86
+    - linux_hl2mp_dedicated_x86
 
 variables:
   GIT_SUBMODULE_STRATEGY: recursive
