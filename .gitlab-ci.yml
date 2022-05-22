@@ -1,17 +1,14 @@
 image: ubuntu:xenial
 
-stage-flow:
-  build:
-    stages:
-    - linux_cstrike_dedicated_x86
-    - linux_hl2mp_dedicated_x86
+stages:
+  - build
 
 variables:
   GIT_SUBMODULE_STRATEGY: recursive
   GIT_LFS_SKIP_SMUDGE: "1"
 
 linux_cstrike_dedicated_x86:
-  stage: linux_cstrike_dedicated_x86
+  stage: build
   before_script:
   - dpkg --add-architecture i386
   - apt update && apt upgrade -y
@@ -25,7 +22,7 @@ linux_cstrike_dedicated_x86:
     - $CI_PROJECT_DIR/out
 
 linux_hl2mp_dedicated_x86:
-  stage: linux_hl2mp_dedicated_x86
+  stage: build
   before_script:
   - dpkg --add-architecture i386
   - apt update && apt upgrade -y
