@@ -2,6 +2,7 @@ image: ubuntu:xenial
 
 stages:
   - linux_cstrike_dedicated_x86
+  - linux_hl2mp_dedicated_x86
 
 variables:
   GIT_SUBMODULE_STRATEGY: recursive
@@ -11,11 +12,25 @@ linux_cstrike_dedicated_x86:
   stage: linux_cstrike_dedicated_x86
   before_script:
   - dpkg --add-architecture i386
-  - apt update
+  - apt update && apt upgrade -y
   - apt install -y git curl wget ca-certificates libedit-dev libedit-dev:i386 zlib1g-dev zlib1g-dev:i386 python gcc gcc-multilib g++ g++-multilib pkg-config libopus-dev libopus-dev:i386
   script:
   - mkdir -p $CI_PROJECT_DIR/out
   - ./waf configure -T release -d --prefix=./out --build-game=cstrike
+  - ./waf install -j$(nproc --all) 2>/dev/null
+  artifacts:
+    paths:
+    - $CI_PROJECT_DIR/out
+
+linux_hl2mp_dedicated_x86
+  stage: linux_hl2mp_dedicated_x86
+  before_script
+  - dpkg --add-architecture i386
+  - apt update && apt upgrade -y
+  - apt install -y git curl wget ca-certificated libedit-dev libedit-dev:i386 zlib1g-dev zlib1g-dev:i386 python gcc gcc-multilib g++ g++-multilib pkg-config libopus-dev libopus-dev:i386
+  script:
+  - mkdir -p $CI_PROJECT_DIR/out
+  - ./waf configure -T release -d --prefix=./out --build-game=hl2mp
   - ./waf install -j$(nproc --all) 2>/dev/null
   artifacts:
     paths:
