@@ -38,19 +38,19 @@ linux_hl2mp_dedicated_x86:
 windows_cstrike_dedicated_x86:
   stage: build
   script:
-  - mkdir .\out
-  - .\waf.bat configure -T release -d --prefix=./out --build-game=cstrike
-  - .\waf.bat install 2>/dev/null
+  - mkdir ./out
+  - ./waf.bat configure -T release -d --prefix=./out --build-game=cstrike
+  - ./waf.bat install 2>/dev/null
   artifacts:
     paths:
-    - .\out
+    - ./out
 
 windows_hl2mp_dedicated_x86:
   stage: build
   script:
   - mkdir .\out
-  - .\waf.bat configure -T release -d --prefix=./out --build-game=cstrike
-  - .\waf.bat install 2>/dev/null
+  - ./waf.bat configure -T release -d --prefix=./out --build-game=cstrike
+  - ./waf.bat install 2>/dev/null
   artifacts:
     paths:
-    - .\out
+    - ./out
