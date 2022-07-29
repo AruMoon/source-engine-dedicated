@@ -141,13 +141,20 @@ void CGameConsole::ActivateDelayed(float time)
 #endif
 }
 
-void CGameConsole::SetParent( int parent )
+void CGameConsole::SetParent( intp parent )
 {	
 #ifndef _XBOX
 	if (!m_bInitialized)
 		return;
 
 	m_pConsole->SetParent( static_cast<vgui::VPANEL>( parent ));
+
+	// apply proportionality from parent
+	if (vgui::ipanel()->IsProportional(static_cast<vgui::VPANEL>(parent)))
+	{
+		m_pConsole->SetProportional(true);
+		m_pConsole->InvalidateLayout(true, true);
+	}
 #endif
 }
 

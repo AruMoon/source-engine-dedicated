@@ -18,6 +18,7 @@
 #if !( defined( _X360 ) && defined( _CERT ) )
 #define VPROF_ENABLED
 #endif
+// TODO(nillerusr): make stubbed vprofile
 
 #if defined(_X360) && defined(VPROF_ENABLED)
 #include "tier0/pmc360.h"
@@ -382,12 +383,13 @@ private:
 	
 #endif
 
+	unsigned	m_nCurFrameCalls;
+	unsigned	m_nPrevFrameCalls;
+
 	int			m_nRecursions;
 	
-	unsigned	m_nCurFrameCalls;
 	CCycleCount	m_CurFrameTime;
 	
-	unsigned	m_nPrevFrameCalls;
 	CCycleCount	m_PrevFrameTime;
 
 	unsigned	m_nTotalCalls;
@@ -631,13 +633,14 @@ protected:
 	int			m_GroupIDStack[MAX_GROUP_STACK_DEPTH];
 	int			m_GroupIDStackDepth;
 #endif
-	int 		m_enabled;
-	bool		m_fAtRoot; // tracked for efficiency of the "not profiling" case
-	CVProfNode *m_pCurNode;
 	CVProfNode	m_Root;
+	CVProfNode *m_pCurNode;
+
 	int			m_nFrames;
-	int			m_ProfileDetailLevel;
+	int 		m_enabled;
 	int			m_pausedEnabledDepth;
+	bool		m_fAtRoot; // tracked for efficiency of the "not profiling" case
+	int			m_ProfileDetailLevel;
 
 	class CBudgetGroup
 	{

@@ -13,6 +13,8 @@
 #include "ep1_gamestats.h"
 #include "tier1/utlstring.h"
 
+#include <time.h>
+
 // EP2 Game Stats
 enum Ep2GameStatsVersions_t
 {
@@ -215,7 +217,7 @@ public:
 					{
 						Ep2LevelStats_t::EntityDeathsLump_t data;
 						char npcName[ 512 ];
-						LoadBuffer.GetString( npcName );
+						LoadBuffer.GetString( npcName, sizeof( npcName ) );
 						LoadBuffer.Get( &data, sizeof( data ) );
 						pItem->m_dictEntityDeaths.Insert( npcName, data );
 					}
@@ -229,7 +231,7 @@ public:
 					{
 						Ep2LevelStats_t::WeaponLump_t data;
 						char weaponName[ 512 ];
-						LoadBuffer.GetString( weaponName );
+						LoadBuffer.GetString( weaponName, sizeof( weaponName ) );
 						LoadBuffer.Get( &data, sizeof( data ) );
 						pItem->m_dictWeapons.Insert( weaponName, data );
 					}
@@ -240,7 +242,7 @@ public:
 					Assert( pItem );
 					Ep2LevelStats_t::SaveGameInfo_t *info = &pItem->m_SaveGameInfo;
 					char sz[ 512 ];
-					LoadBuffer.GetString( sz );
+					LoadBuffer.GetString( sz, sizeof( sz ) );
 					info->m_sCurrentSaveFile = sz;
 					info->m_nCurrentSaveFileTime = LoadBuffer.GetInt();
 					int c = LoadBuffer.GetInt();
@@ -277,7 +279,7 @@ public:
 						{
 							Ep2LevelStats_t::GenericStatsLump_t data;
 							char pchStatName[ 512 ];
-							LoadBuffer.GetString( pchStatName );
+							LoadBuffer.GetString( pchStatName, sizeof( pchStatName ) );
 							LoadBuffer.Get( &data, sizeof( data ) );
 							pItem->m_dictGeneric.Insert( pchStatName, data );
 						}
@@ -417,7 +419,7 @@ public:
 		{
 		}
 
-		void Latch( char const *pchSaveName, unsigned int uFileTime )
+		void Latch( char const *pchSaveName, time_t uFileTime )
 		{
 			m_pCurrentRecord = &m_Records[ m_Records.AddToTail() ];
 			m_nCurrentSaveFileTime = uFileTime;
@@ -426,7 +428,7 @@ public:
 
 		CUtlVector< SaveGameInfoRecord2_t > m_Records;
 		SaveGameInfoRecord2_t				*m_pCurrentRecord;
-		unsigned int						m_nCurrentSaveFileTime;
+		time_t							m_nCurrentSaveFileTime;
 		CUtlString							m_sCurrentSaveFile;
 	};
 

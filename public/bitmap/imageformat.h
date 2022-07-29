@@ -15,7 +15,9 @@
 
 enum NormalDecodeMode_t
 {
-	NORMAL_DECODE_NONE			= 0
+	NORMAL_DECODE_NONE			= 0,
+	NORMAL_DECODE_ATI2N,
+	NORMAL_DECODE_ATI2N_ALPHA
 };
 
 // Forward declaration
@@ -457,6 +459,7 @@ namespace ImageLoader
 	bool ResampleRGBA8888( const ResampleInfo_t &info );
 	bool ResampleRGBA16161616( const ResampleInfo_t &info );
 	bool ResampleRGB323232F( const ResampleInfo_t &info );
+	bool ResampleRGBA32323232F( const ResampleInfo_t& info );
 
 	void ConvertNormalMapRGBA8888ToDUDVMapUVLX8888( const unsigned char *src, int width, int height,
 													unsigned char *dst_ );

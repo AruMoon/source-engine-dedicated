@@ -47,7 +47,6 @@
 #include <stdarg.h>
 
 #ifdef POSIX
-#include <iconv.h>
 #include <ctype.h>
 #include <unistd.h>
 #include <stdlib.h>
@@ -79,6 +78,12 @@
 #include "xbox/xbox_win32stubs.h"
 #endif
 #include "tier0/memdbgon.h"
+
+#ifdef ANDROID
+#include "common/iconv.h"
+#elif POSIX
+#include <iconv.h>
+#endif
 
 static int FastToLower( char c )
 {
@@ -2014,6 +2019,9 @@ bool V_StripLastDir( char *dirName, int maxlen )
 //-----------------------------------------------------------------------------
 const char * V_UnqualifiedFileName( const char * in )
 {
+	if( !in || !in[0] )
+		return in;
+
 	// back up until the character after the first path separator we find,
 	// or the beginning of the string
 	const char * out = in + strlen( in ) - 1;

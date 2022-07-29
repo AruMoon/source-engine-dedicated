@@ -47,44 +47,41 @@ LINKFLAGS = {
 CFLAGS = {
 	'common': {
 		# disable thread-safe local static initialization for C++11 code, as it cause crashes on Windows XP
-		'msvc':    ['/D_USING_V110_SDK71_', '/Zi', '/FS', '/Zc:threadSafeInit-', '/MT'],
-		'clang':   ['-g', '-gdwarf-2', '-fvisibility=hidden'],
-		'gcc':     ['-g', '-fvisibility=hidden'],
-		'owcc':	   ['-fno-short-enum', '-ffloat-store', '-g3']
+		'msvc':    ['/D_USING_V110_SDK71_', '/Zi', '/FS', '/Zc:threadSafeInit-'],
+		'clang':   ['-g0', '-fno-strict-aliasing', '-gdwarf-2', '-fvisibility=hidden'],
+		'gcc':     ['-g0', '-fno-strict-aliasing', '-fvisibility=hidden'],
+		'owcc':	   ['-fno-short-enum', '-ffloat-store', '-g0']
 	},
 	'fast': {
-		'msvc':    ['/O2', '/Oy'],
-		'gcc': {
-			'3':       ['-O3', '-fomit-frame-pointer'],
-			'default': ['-Ofast', '-funsafe-math-optimizations', '-funsafe-loop-optimizations', '-fomit-frame-pointer']
-		},
+		'msvc':	   ['/O2', '/Oy', '/MT'],
+		'gcc':	   ['-Ofast'],
 		'clang':   ['-Ofast'],
 		'default': ['-O3']
 	},
 	'fastnative': {
-		'msvc':    ['/O2', '/Oy'],
+		'msvc':    ['/O2', '/Oy', '/MT'],
 		'gcc':     ['-Ofast', '-march=native', '-funsafe-math-optimizations', '-funsafe-loop-optimizations', '-fomit-frame-pointer'],
 		'clang':   ['-Ofast', '-march=native'],
 		'default': ['-O3']
 	},
 	'release': {
-		'msvc':    ['/O2'],
-		'owcc':    ['-O3', '-foptimize-sibling-calls', '-fomit-leaf-frame-pointer', '-fomit-frame-pointer', '-fschedule-insns', '-funsafe-math-optimizations', '-funroll-loops', '-frerun-optimizer', '-finline-functions', '-finline-limit=512', '-fguess-branch-probability', '-fno-strict-aliasing', '-floop-optimize'],
-		'default': ['-O3']
+		'msvc':    ['/O2', '/MT'],
+		'owcc':    ['-O3', '-fomit-leaf-frame-pointer', '-fomit-frame-pointer', '-finline-functions', '-finline-limit=512'],
+		'default': ['-O2', '-funsafe-math-optimizations', '-ftree-vectorize']
 	},
 	'debug': {
-		'msvc':    ['/Od'],
-		'owcc':    ['-O0', '-fno-omit-frame-pointer', '-funwind-tables', '-fno-omit-leaf-frame-pointer'],
-		'default': ['-O1']
+		'msvc':    ['/Od', '/MTd'],
+		'owcc':    ['-g', '-O0', '-fno-omit-frame-pointer', '-funwind-tables', '-fno-omit-leaf-frame-pointer'],
+		'default': ['-g', '-O0'] #, '-ftree-vectorize', '-ffast-math', '-fno-tree-partial-pre']
 	},
 	'sanitize': {
-		'msvc':    ['/Od', '/RTC1'],
+		'msvc':    ['/Od', '/RTC1', '/MT'],
 		'gcc':     ['-Og', '-fsanitize=undefined', '-fsanitize=address'],
 		'clang':   ['-O0', '-fsanitize=undefined', '-fsanitize=address'],
 		'default': ['-O0']
 	},
 	'nooptimize': {
-		'msvc':    ['/Od'],
+		'msvc':    ['/Od', '/MT'],
 		'default': ['-O0']
 	}
 }

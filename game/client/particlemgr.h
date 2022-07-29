@@ -120,7 +120,7 @@ entities. Each one is useful under different conditions.
 #include "utllinkedlist.h"
 #include "utldict.h"
 #ifdef WIN32
-#include <typeinfo.h>
+#include <typeinfo>
 #else
 #include <typeinfo>
 #endif
@@ -234,13 +234,6 @@ public:
 #endif
 	
 	IMaterial *m_pMaterial;
-};
-
-// Particle simulation list, used to determine what particles to simulate and how.
-struct ParticleSimListEntry_t
-{
-	CNewParticleEffect* m_pNewParticleEffect;
-	bool m_bBoundingBoxOnly;
 };
 
 
@@ -722,9 +715,8 @@ private:
 		const CViewSetup& view, const VMatrix &worldToPixels, float flFocalDist );
 
 	bool RetireParticleCollections( CParticleSystemDefinition* pDef, int nCount, RetireInfo_t *pInfo, float flScreenArea, float flMaxTotalArea );
-
-	void BuildParticleSimList( CUtlVector< ParticleSimListEntry_t > &list );
-	bool EarlyRetireParticleSystems( int nCount, ParticleSimListEntry_t *ppEffects );
+	void BuildParticleSimList( CUtlVector< CNewParticleEffect* > &list );
+	bool EarlyRetireParticleSystems( int nCount, CNewParticleEffect **ppEffects );
 	static int RetireSort( const void *p1, const void *p2 ); 
 
 private:

@@ -22,6 +22,11 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 //
+
+#ifdef TOGLES
+#include "togles/rendermechanism.h"
+#else
+
 #ifndef RENDERMECHANISM_H
 #define RENDERMECHANISM_H
 
@@ -29,8 +34,12 @@
 
 #undef PROTECTED_THINGS_ENABLE
 
+#ifdef OSX
+#include <OpenGL/OpenGL.h>
+#else
 #include <GL/gl.h>
 #include <GL/glext.h>
+#endif
 
 #include "tier0/basetypes.h"
 #include "tier0/platform.h"
@@ -71,3 +80,5 @@
 #endif // defined(DX_TO_GL_ABSTRACTION)
 
 #endif // RENDERMECHANISM_H
+
+#endif

@@ -100,6 +100,7 @@
 
 // memdbgon must be the last include file in a .cpp file!!!
 #include "tier0/memdbgon.h"
+#include "tier0/memalloc.h"
 
 //-----------------------------------------------------------------------------
 // Globals
@@ -1175,7 +1176,7 @@ InitReturnVal_t CEngineAPI::Init()
 	m_bRunningSimulation = false;
 
 	// Initialize the FPU control word
-#if defined(WIN32) && !defined( SWDS ) && !defined( _X360 ) && !defined (__arm__)
+#if defined(WIN32) && !defined( SWDS ) && !defined( _X360 ) && !defined (__arm__) && !defined(PLATFORM_WINDOWS_PC64)
 	_asm
 	{
 		fninit
@@ -2260,7 +2261,7 @@ bool EnableLongTickWatcher()
 #ifdef POSIX
 			(void*)
 #endif
-			LongTickWatcherThread, NULL, 0, (unsigned long int *)&nThreadID );
+			LongTickWatcherThread, NULL, 0, (uintp *)&nThreadID );
 
 		bRet = true;
 	}

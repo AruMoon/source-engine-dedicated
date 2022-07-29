@@ -473,11 +473,11 @@ CPackedStore::~CPackedStore( void )
 	}
 
 	// Free the FindFirst cache data
-	m_directoryList.PurgeAndDeleteElements();
+	m_directoryList.PurgeAndDeleteElementsArray();
 
 	FOR_EACH_MAP( m_dirContents, i )
 	{
-		m_dirContents[i]->PurgeAndDeleteElements();
+		m_dirContents[i]->PurgeAndDeleteElementsArray();
 		delete m_dirContents[i];
 	}
 }
@@ -502,7 +502,7 @@ void SplitFileComponents( char const *pFileName, char *pDirOut, char *pBaseOut, 
 
 	if ( !pDirOut[0] )
 		strcpy( pDirOut, " " );								// blank dir name
-	V_strcpy( pBaseOut, V_UnqualifiedFileName( pFileName ) );
+	V_strncpy( pBaseOut, V_UnqualifiedFileName( pFileName ), MAX_PATH );
 	char *pDot = strrchr( pBaseOut, '.' );
 	if ( pDot )
 	{
@@ -634,11 +634,10 @@ void CPackedStore::Write( void )
 
 	// Do we plan on signing this thing and writing a signature?
 	m_Signature.Purge();
-	uint32 nExpectedSignatureSize = 0;
 	if ( m_SignaturePrivateKey.Count() > 0 && m_SignaturePublicKey.Count() > 0 )
 	{
 		#ifdef VPK_ENABLE_SIGNING
-			nExpectedSignatureSize = k_cubRSASignature;
+			uint32 nExpectedSignatureSize = k_cubRSASignature;
 			headerOut.m_nSignatureSize = sizeof(uint32) + m_SignaturePublicKey.Count() + sizeof(uint32) + nExpectedSignatureSize;
 		#else
 			Error( "VPK signing not implemented" );
