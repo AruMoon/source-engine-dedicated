@@ -37,6 +37,10 @@ linux_hl2mp_dedicated_x86:
 
 windows_cstrike_dedicated_x86:
   stage: build
+  tags:
+  - shared-windows
+  - windows
+  - windows-1809
   script:
   - mkdir ./out
   - ./waf configure -T release -d --prefix=./out --build-game=cstrike
@@ -47,6 +51,10 @@ windows_cstrike_dedicated_x86:
 
 windows_hl2mp_dedicated_x86:
   stage: build
+  tags:
+  - shared-windows
+  - windows
+  - windows-1809
   script:
   - mkdir .\out
   - ./waf configure -T release -d --prefix=./out --build-game=cstrike
