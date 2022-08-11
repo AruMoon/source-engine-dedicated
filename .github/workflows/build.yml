@@ -11,9 +11,11 @@ jobs:
       uses: actions/checkout@v2
       with:
         submodules: recursive
-    - name: Build
+    - name: Create output dir
       run: mkdir ./out
+    - name: Configure build
       run: ./waf configure -T release -d --build-game=cstrike --prefix=./out
+    - name: Build
       run: ./waf install
     - name: Upload artifact
       uses: actions/upload-artifact@v2
@@ -30,9 +32,11 @@ jobs:
       uses: actions/checkout@v2
       with:
         submodules: recursive
-    - name: Build
+    - name: Create output dir
       run: mkdir ./out
+    - name: Configure build
       run: ./waf configure -T release -d --build-game=hl2mp --prefix=./out
+    - name: Build
       run: ./waf install
     - name: Upload artifact
       uses: actions/upload-artifact@v2
