@@ -42,7 +42,8 @@ windows_cstrike_dedicated_x86:
   - windows
   - windows-1809
   script:
-  - iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1')) && SET "PATH=%PATH%;%ALLUSERSPROFILE%\chocolatey\bin"
+  - iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))
+  - SET "PATH=%PATH%;%ALLUSERSPROFILE%\chocolatey\bin"
   - choco install -y python3
   - python --version
   - mkdir ./out
@@ -59,7 +60,8 @@ windows_hl2mp_dedicated_x86:
   - windows
   - windows-1809
   script:
-  - iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1')) && SET "PATH=%PATH%;%ALLUSERSPROFILE%\chocolatey\bin"
+  - iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))
+  - SET "PATH=%PATH%;%ALLUSERSPROFILE%\chocolatey\bin"
   - choco install -y python3
   - python --version
   - mkdir ./out
