@@ -42,8 +42,8 @@ windows_cstrike_dedicated_x86:
   - windows
   - windows-1809
   before_script:
-  - Invoke-WebRequest -Uri "https://www.python.org/ftp/python/3.7.0/python-3.7.0.exe" -OutFile "c:/temp/python-3.7.0.exe"
-  - c:/temp/python-3.7.0.exe /quiet InstallAllUsers=0 PrependPath=1 Include_test=0
+  - Invoke-WebRequest -Uri "https://www.python.org/ftp/python/3.7.0/python-3.7.0.exe" -OutFile "c:/python-3.7.0.exe"
+  - c:/python-3.7.0.exe /quiet InstallAllUsers=0 PrependPath=1 Include_test=0
   script:
   - mkdir ./out
   - ./waf configure -T release -d --prefix=./out --build-game=cstrike
@@ -59,8 +59,8 @@ windows_hl2mp_dedicated_x86:
   - windows
   - windows-1809
   before_script:
-  - Invoke-WebRequest -Uri "https://www.python.org/ftp/python/3.7.0/python-3.7.0.exe" -OutFile "c:/temp/python-3.7.0.exe"
-  - c:/temp/python-3.7.0.exe /quiet InstallAllUsers=0 PrependPath=1 Include_test=0
+  - Invoke-WebRequest -Uri "https://www.python.org/ftp/python/3.7.0/python-3.7.0.exe" -OutFile "c:/python-3.7.0.exe"
+  - c:/python-3.7.0.exe /quiet InstallAllUsers=0 PrependPath=1 Include_test=0
   script:
   - mkdir ./out
   - ./waf configure -T release -d --prefix=./out --build-game=cstrike
