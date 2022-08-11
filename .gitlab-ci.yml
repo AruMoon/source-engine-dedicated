@@ -44,9 +44,9 @@ windows_cstrike_dedicated_x86:
   script:
   - iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))
   - SET "PATH=%PATH%;%ALLUSERSPROFILE%\chocolatey\bin"
-  - choco install -y python
+  - choco install -y python3
   - refreshenv
-  - python --version
+  - python3 --version
   - mkdir ./out
   - ./waf configure -T release -d --prefix=./out --build-game=cstrike
   - ./waf install 2>/dev/null
@@ -63,9 +63,9 @@ windows_hl2mp_dedicated_x86:
   script:
   - iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))
   - SET "PATH=%PATH%;%ALLUSERSPROFILE%\chocolatey\bin"
-  - choco install -y python
+  - choco install -y python3
   - refreshenv
-  - python --version
+  - python3 --version
   - mkdir ./out
   - ./waf configure -T release -d --prefix=./out --build-game=cstrike
   - ./waf install 2>/dev/null
