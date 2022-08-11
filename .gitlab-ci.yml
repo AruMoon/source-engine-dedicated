@@ -41,6 +41,8 @@ windows_cstrike_dedicated_x86:
   - shared-windows
   - windows
   - windows-1809
+  variables:
+    PATH: "C:\Python27"
   script:
   - mkdir ./out
   - ./waf configure -T release -d --prefix=./out --build-game=cstrike
@@ -55,8 +57,10 @@ windows_hl2mp_dedicated_x86:
   - shared-windows
   - windows
   - windows-1809
+  variables:
+    PATH: "C:\Python27"
   script:
-  - mkdir .\out
+  - mkdir ./out
   - ./waf configure -T release -d --prefix=./out --build-game=cstrike
   - ./waf install 2>/dev/null
   artifacts:
