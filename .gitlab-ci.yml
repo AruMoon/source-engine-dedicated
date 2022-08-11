@@ -41,8 +41,7 @@ windows_cstrike_dedicated_x86:
   - shared-windows
   - windows
   - windows-1809
-  beforce_script:
-  - [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
+  before_script:
   - Invoke-WebRequest -Uri "https://www.python.org/ftp/python/3.7.0/python-3.7.0.exe" -OutFile "c:/temp/python-3.7.0.exe"
   - c:/temp/python-3.7.0.exe /quiet InstallAllUsers=0 PrependPath=1 Include_test=0
   script:
@@ -59,8 +58,7 @@ windows_hl2mp_dedicated_x86:
   - shared-windows
   - windows
   - windows-1809
-  beforce_script:
-  - [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
+  before_script:
   - Invoke-WebRequest -Uri "https://www.python.org/ftp/python/3.7.0/python-3.7.0.exe" -OutFile "c:/temp/python-3.7.0.exe"
   - c:/temp/python-3.7.0.exe /quiet InstallAllUsers=0 PrependPath=1 Include_test=0
   script:
