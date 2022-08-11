@@ -1,0 +1,41 @@
+name: Build dedicated server
+on: [push, pull_request]
+jobs:
+  windows_cstrike_dedicated_x86:
+    runs-on:
+    - os: windows-latest
+      targetos: win32
+      targetarch: i386
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+      with:
+        submodules: recursive
+    - name: Build
+      run: mkdir ./out
+      run: ./waf configure -T release -d --build-game=cstrike --prefix=./out
+      run: ./waf install
+    - name: Upload artifact
+      uses: actions/upload-artifact@v2
+      with:
+        name: windows_cstrike_dedicated_x86
+        path: ./out
+  windows_hl2mp_dedicated_x86:
+    runs-on:
+    - os: windows-latest
+      targetos: win32
+      targetarch: i386
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+      with:
+        submodules: recursive
+    - name: Build
+      run: mkdir ./out
+      run: ./waf configure -T release -d --build-game=hl2mp --prefix=./out
+      run: ./waf install
+    - name: Upload artifact
+      uses: actions/upload-artifact@v2
+      with:
+        name: windows_hl2mp_dedicated_x86
+        path: ./out
