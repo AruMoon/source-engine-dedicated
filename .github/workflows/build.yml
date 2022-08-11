@@ -2,10 +2,7 @@ name: Build dedicated server
 on: [push, pull_request]
 jobs:
   windows_cstrike_dedicated_x86:
-    runs-on:
-    - os: windows-latest
-      targetos: win32
-      targetarch: i386
+    runs-on: windows-latest
     steps:
     - name: Checkout
       uses: actions/checkout@v2
@@ -23,10 +20,7 @@ jobs:
         name: windows_cstrike_dedicated_x86
         path: ./out
   windows_hl2mp_dedicated_x86:
-    runs-on:
-    - os: windows-latest
-      targetos: win32
-      targetarch: i386
+    runs-on: windows-latest
     steps:
     - name: Checkout
       uses: actions/checkout@v2
