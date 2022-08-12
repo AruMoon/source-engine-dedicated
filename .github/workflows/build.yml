@@ -11,7 +11,7 @@ jobs:
     - name: Create output dir
       run: mkdir ./out
     - name: Configure build
-      run: ./waf configure -T release -d --build-game=cstrike --prefix=./out
+      run: ./waf configure -T debug -d --build-game=cstrike --prefix=./out
     - name: Build
       run: ./waf install
     - name: Upload artifact
@@ -29,7 +29,7 @@ jobs:
     - name: Create output dir
       run: mkdir ./out
     - name: Configure build
-      run: ./waf configure -T release -d --build-game=hl2mp --prefix=./out
+      run: ./waf configure -T debug -d --build-game=hl2mp --prefix=./out
     - name: Build
       run: ./waf install
     - name: Upload artifact
